@@ -1,0 +1,163 @@
+<html>
+  <head>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+<script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart3);
+   
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "faired_countries.php", false);
+    ajax.send();
+
+
+
+    ajax.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            
+        }
+        return data;
+    };
+
+    function drawChart(){
+        
+
+        var arr1= [
+        ["Country", "Count", { role: "style" } ],
+          ];
+          var data= ajax.onreadystatechange();
+
+          var arr5 = [];
+          
+          for(i=0; i<data.length; i++){
+              if(data[i][5]=='Others'){
+                  arr5.push([data[i][0],Number(data[i][2]),"darkblue"]);
+              }
+          }
+          arr5=arr1.concat(arr5);
+
+          //document.write(typeof(arr5[0][1]));
+
+          var data = google.visualization.arrayToDataTable(arr5);
+          var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Confirmed cases in Others",
+        width: 400,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(view, options);
+    }
+     
+    function drawChart2(){
+        
+
+        var arr1= [
+        ["Country", "Count", { role: "style" } ],
+          ];
+          var data= ajax.onreadystatechange();
+
+          var arr5 = [];
+          
+          for(i=0; i<data.length; i++){
+              if(data[i][5]=='Others'){
+                  arr5.push([data[i][0],Number(data[i][3]),"darkgreen"]);
+              }
+          }
+          arr5=arr1.concat(arr5);
+
+          //document.write(typeof(arr5[0][1]));
+
+          var data = google.visualization.arrayToDataTable(arr5);
+          var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Recovered cases in Others",
+        width: 400,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values2"));
+      chart.draw(view, options);
+    }  
+    function drawChart3(){
+        
+
+        var arr1= [
+        ["Country", "Count", { role: "style" } ],
+          ];
+          var data= ajax.onreadystatechange();
+
+          var arr5 = [];
+          
+          for(i=0; i<data.length; i++){
+              if(data[i][5]=='Others'){
+                  arr5.push([data[i][0],Number(data[i][3]),"darkred"]);
+              }
+          }
+          arr5=arr1.concat(arr5);
+
+          //document.write(typeof(arr5[0][1]));
+
+          var data = google.visualization.arrayToDataTable(arr5);
+          var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Deaths in Others",
+        width: 400,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values3"));
+      chart.draw(view, options);
+    }  
+    </script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron" style="padding-top:15px;padding-bottom:15px;">  
+        <h2 style="text-align: center;">Others Data</h2>        
+      </div>  
+</div>
+  <div class="container-fluid" style="align-items: center;padding-left:30px; ">
+    <div class="row">
+        <div class="col-md-4">
+          <div id="barchart_values" style="width: 400px; height: 500px;"></div>
+        </div>
+        <div class="col-md-4">
+          <div id="barchart_values2" style="width: 400px; height: 500px;"></div>
+        </div>
+        <div class="col-md-4">
+          <div id="barchart_values3" style="width: 400px; height: 500px;"></div>
+        </div>
+    </div>
+  </div>
+</body>

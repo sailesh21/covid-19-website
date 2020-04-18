@@ -1,0 +1,138 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+  
+<script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart1);
+    google.charts.setOnLoadCallback(drawChart3);
+    google.charts.setOnLoadCallback(drawChart2);
+
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "faired_continents.php", false);
+    ajax.send();
+
+
+
+    ajax.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            
+        }
+        return data;
+    };
+
+    function retrieval(){
+          var data= ajax.onreadystatechange();
+          return data;
+    };
+
+    function final(){
+      var data=retrieval();
+      return data;
+    };
+    function drawChart2(){
+        
+
+        var arr1= [
+          ['Continent', 'Recovered Cases'],
+          ];
+          var data= final();
+
+          var arr5 = [];
+          arr5.push(['Asia',data.Asia[1]]);
+          arr5.push(['Africa',data.Africa[1]]);
+          arr5.push(['Australia',data.Australia[1]]);
+          arr5.push(['Antarctica',data.Antarctica[1]]);
+          arr5.push(['Europe',data.Europe[1]]);
+          arr5.push(['North_America',data.North_America[1]]);
+          arr5.push(['South_America',data.South_America[1]]);
+          arr5.push(['Others',data.Others[1]]);
+          arr5=arr1.concat(arr5);
+
+          //document.write((data.Asia[1]));
+
+          var data = google.visualization.arrayToDataTable(arr5);
+          var options = {
+            title: 'Recovered Cases across Continents'
+          };
+
+          var chart1 = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+          chart1.draw(data, options);
+        }
+        function drawChart1(){
+        
+
+        var arr1= [
+          ['Continent', 'Confirmed Cases'],
+          ];
+          var data= final();
+
+          var arr5 = [];
+          arr5.push(['Asia',data.Asia[0]]);
+          arr5.push(['Africa',data.Africa[0]]);
+          arr5.push(['Australia',data.Australia[0]]);
+          arr5.push(['Antarctica',data.Antarctica[0]]);
+          arr5.push(['Europe',data.Europe[0]]);
+          arr5.push(['North_America',data.North_America[0]]);
+          arr5.push(['South_America',data.South_America[0]]);
+          arr5.push(['Others',data.Others[0]]);
+          arr5=arr1.concat(arr5);
+
+          //document.write((data.Asia[1]));
+
+          var data = google.visualization.arrayToDataTable(arr5);
+          var options = {
+            title: 'Confirmed Cases across Continents'
+          };
+
+          var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
+
+          chart1.draw(data, options);
+        }
+    function drawChart3() {
+    
+        var arr= [
+          ['Continent', 'Deaths'],
+          ];
+     
+     
+        var data= final();
+        var arr6 = []
+        arr6.push(['Asia',data.Asia[2]]);
+        arr6.push(['Africa',data.Africa[2]]);
+        arr6.push(['Australia',data.Australia[2]]);
+        arr6.push(['Antarctica',data.Antarctica[2]]);
+        arr6.push(['Europe',data.Europe[2]]);
+        arr6.push(['North_America',data.North_America[2]]);
+        arr6.push(['South_America',data.South_America[2]]);
+        arr6.push(['Others',data.Others[2]]);
+        arr6=arr.concat(arr6);
+
+        //document.write((data.Asia[0]));
+
+        var data = google.visualization.arrayToDataTable(arr6);
+        console.log(data);
+        var options = {
+          title: 'Deaths across Continents'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+        chart.draw(data, options);
+    }
+////new chart
+
+      
+</script>
+<div class="container-fluid" style="align-items: center;padding-left:170px; ">
+  <div class="row">
+      <div class="col-lg-6">      
+        <div id="piechart1" style="width: 500px; height: 500px;"></div>
+      </div>
+      <div class="col-lg-6">      
+        <div id="piechart2"  style="width: 500px; height: 500px;"></div>
+      </div>
+  </div>
+</div>
+<div class="container-fluid" id="piechart3"  style="width: 600px; height: 600px; align-items: center; "></div>
